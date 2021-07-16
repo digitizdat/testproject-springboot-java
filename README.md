@@ -30,6 +30,13 @@ running, and then...
     docker run -p 8080:8080 -t springio/gs-spring-boot-docker
 
 
+You can also do it the long way using the Dockerfile and the script I created
+that explodes the JAR file into different layers for efficiency:
+
+    ./build-fromdockerfile.sh
+    docker run -p 8080:8080 -t springio/gs-spring-boot-docker
+
+
 ## Reference Documentation
 For further reference, please consider the following sections:
 
