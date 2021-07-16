@@ -1,4 +1,4 @@
-package payroll;
+package org.mcgreal.payroll;
 
 class EmployeeNotFoundException extends RuntimeException {
 

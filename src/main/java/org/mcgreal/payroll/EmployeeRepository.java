@@ -1,4 +1,4 @@
-package payroll;
+package org.mcgreal.payroll;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
