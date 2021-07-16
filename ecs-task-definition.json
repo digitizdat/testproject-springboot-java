@@ -1,0 +1,32 @@
+{
+  "executionRoleArn": "arn:aws:iam::YOUR_12_DIGIT_ACCTNO:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "FaithfulBee",
+      "image": "YOUR_12_DIGIT_ACCTNO.dkr.ecr.us-east-2.amazonaws.com/payroll-application",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/FaithfulBee",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "family": "FaithfulBee"
+}
