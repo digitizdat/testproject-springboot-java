@@ -6,6 +6,12 @@ wrapper in the root directory like so:
 
     ./mvnw clean spring-boot:run
 
+To package this code as a JAR for use in a container, use `mvnw` like so:
+
+    ./mvnw package
+
+This will create a file called `target/payroll-0.0.1-SNAPSHOT.jar`.
+
 
 # Getting Started
 
