@@ -8,6 +8,10 @@ endif
 ifeq ($(AWS_SECRET_ACCESS_KEY),)
 $(error "You must set the AWS_SECRET_ACCESS_KEY variable")
 endif
+ifeq ($(AWS_ACCOUNT_NUMBER),)
+$(error "You must set the AWS_ACCOUNT_NUMBER variable")
+endif
+
 
 # Syntax highlighting. MacOS ships with an old version of Bash that doesn't
 # support the \e escape so we need to use this other escape sequence.
@@ -25,7 +29,7 @@ NORMAL=$(ESC)[0m
 
 
 # Change this to your AWS account number.
-AWS_ACCOUNT=YOUR_12_DIGIT_ACCTNO
+AWS_ACCOUNT=$(AWS_ACCOUNT_NUMBER)
 
 # You will need to create a repo in ECR called payroll-application.
 AWS_ECR_REPONAME=payroll-application
