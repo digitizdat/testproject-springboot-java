@@ -24,7 +24,7 @@ phases:
       - echo "~~~ Building the JAR ($(date)) ~~~"
       - mvn --no-transfer-progress package
       - mkdir -p target/dependency
-      - cd target/dependency && jar -xf ../payroll-0.0.1-SNAPSHOT.jar
+      - cd target/dependency && jar -xf ../payroll-0.0.1-SNAPSHOT.jar && cd ../../
   post_build:
     commands:
       - echo "~~~ Creating the Docker image ($(date)) ~~~"
