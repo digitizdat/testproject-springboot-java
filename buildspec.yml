@@ -4,6 +4,7 @@ env:
   shell: bash
   parameter-store:
     AWS_ECR_REPONAME: /PayrollApp/RepoName
+    AWS_ACCOUNT_ID: /PayrollApp/AWSAccountNumber
 
 phases:
   install:
