@@ -4,7 +4,6 @@ env:
   shell: bash
   parameter-store:
     AWS_ECR_REPONAME: /PayrollApp/RepoName
-    AWS_ACCOUNT: /PayrollApp/AWSAccountNumber
 
 phases:
   install:
@@ -13,22 +12,24 @@ phases:
   pre_build:
     on-failure: CONTINUE
     commands:
-      - echo "~~~ Creating the ECR repo ($(date)) ~~~"
+      - echo "~~~ Creating the ECR repo ~~~"
       - aws ecr create-repository
         --repository-name ${AWS_ECR_REPONAME}
         --image-scanning-configuration scanOnPush=true
         2>&1 |grep -v RepositoryAlreadyExistsException
+      - echo "~~~ Logging into ECR ~~~"
+      - aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
   build:
     on-failure: ABORT
     commands:
-      - echo "~~~ Building the JAR ($(date)) ~~~"
+      - echo "~~~ Building the JAR ~~~"
       - mvn --no-transfer-progress package
       - mkdir -p target/dependency
       - cd target/dependency && jar -xf ../payroll-0.0.1-SNAPSHOT.jar && cd ../../
   post_build:
     commands:
-      - echo "~~~ Creating the Docker image ($(date)) ~~~"
+      - echo "~~~ Creating the Docker image ~~~"
       - docker build -t ${AWS_ECR_REPONAME} .
-      - docker tag ${AWS_ECR_REPONAME}:latest ${AWS_ACCOUNT}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
-      - docker push ${AWS_ACCOUNT}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
+      - docker tag ${AWS_ECR_REPONAME}:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
 
