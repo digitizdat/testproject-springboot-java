@@ -14,9 +14,9 @@ phases:
     on-failure: CONTINUE
     commands:
       - echo "~~~ Creating the ECR repo ($(date)) ~~~"
-      - aws ecr create-repository \
-        --repository-name $AWS_ECR_REPONAME \
-        --image-scanning-configuration scanOnPush=true \
+      - aws ecr create-repository
+        --repository-name $AWS_ECR_REPONAME
+        --image-scanning-configuration scanOnPush=true
         2>&1 |grep -v RepositoryAlreadyExistsException
   build:
     on-failure: ABORT
