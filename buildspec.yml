@@ -16,7 +16,7 @@ phases:
     commands:
       - echo "~~~ Creating the ECR repo ($(date)) ~~~"
       - aws ecr create-repository \
-        --repository-name ${AWS_ECR_REPONAME} \
+        --repository-name $AWS_ECR_REPONAME \
         --image-scanning-configuration scanOnPush=true \
         2>&1 |grep -v RepositoryAlreadyExistsException
   build:
@@ -29,7 +29,7 @@ phases:
   post_build:
     commands:
       - echo "~~~ Creating the Docker image ($(date)) ~~~"
-      - docker build -t ${AWS_ECR_REPONAME} .
-      - docker tag ${AWS_ECR_REPONAME}:latest ${AWS_ACCOUNT}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
-      - docker push ${AWS_ACCOUNT}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_ECR_REPONAME}:latest
+      - docker build -t $AWS_ECR_REPONAME .
+      - docker tag $AWS_ECR_REPONAME:latest $AWS_ACCOUNT.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$AWS_ECR_REPONAME:latest
+      - docker push $AWS_ACCOUNT.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$AWS_ECR_REPONAME:latest
 
