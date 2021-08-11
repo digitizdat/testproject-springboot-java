@@ -3,9 +3,8 @@ version: 0.2
 env:
   shell: bash
   parameter-store:
-    AWS_ECR_REPONAME: /PayrollApp/RepoName
-    AWS_ACCOUNT: /PayrollApp/AWSAccountNumber
-    AWS_DEFAULT_REGION: /PayrollApp/AWSDefaultRegion
+    AWS_ECR_REPONAME: "/PayrollApp/RepoName"
+    AWS_ACCOUNT: "/PayrollApp/AWSAccountNumber"
 
 phases:
   install:
