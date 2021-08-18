@@ -1,0 +1,38 @@
+{
+    "name": "{{app_name}}",
+    "source": {
+        "type": "CODECOMMIT",
+        "location": "https://git-codecommit.{{aws_region}}.amazonaws.com/v1/repos/{{app_name}}",
+        "gitCloneDepth": 1,
+        "gitSubmodulesConfig": {
+            "fetchSubmodules": false
+        },
+        "buildspec": "buildspec.yml",
+        "insecureSsl": false
+    },
+    "sourceVersion": "refs/heads/main",
+    "artifacts": {
+        "type": "NO_ARTIFACTS"
+    },
+    "cache": {
+        "type": "NO_CACHE"
+    },
+    "environment": {
+        "type": "LINUX_CONTAINER",
+        "image": "aws/codebuild/amazonlinux2-x86_64-standard:3.0",
+        "computeType": "BUILD_GENERAL1_SMALL",
+        "privilegedMode": true,
+        "imagePullCredentialsType": "CODEBUILD"
+    },
+    "serviceRole": "arn:aws:iam::{{aws_account}}:role/service-role/codebuild-{{app_name}}",
+    "timeoutInMinutes": 60,
+    "queuedTimeoutInMinutes": 480,
+    "encryptionKey": "arn:aws:kms:{{aws_region}}:{{aws_account}}:alias/aws/s3",
+    "tags": [],
+    "logsConfig": {
+        "cloudWatchLogs": {
+            "status": "ENABLED",
+            "groupName": "/aws/codebuild/{{app_name}}"
+        }
+    }
+}
