@@ -11,6 +11,10 @@ endif
 ifeq ($(AWS_ACCOUNT_NUMBER),)
 $(error "You must set the AWS_ACCOUNT_NUMBER variable")
 endif
+ifeq ($(PAYROLL_APP_VERSION),)
+$(error "You must set the PAYROLL_APP_VERSION variable")
+endif
+
 
 
 # Syntax highlighting. MacOS ships with an old version of Bash that doesn't
@@ -39,9 +43,9 @@ all: build repo docker
 
 build:  ## Build the JAR
 	@echo "\n~~~ $(BOLD)$(CYAN)Building the JAR$(NORMAL) ~~~"
-	./mvnw package
+	./mvnw package -DPAYROLL_APP_VERSION=$(PAYROLL_APP_VERSION)-SNAPSHOT
 	mkdir -p target/dependency
-	cd target/dependency && jar -xf ../payroll-0.0.1-SNAPSHOT.jar
+	cd target/dependency && jar -xf ../payroll-$(PAYROLL_APP_VERSION)-SNAPSHOT.jar
 
 repo:  ## Create the ECR repo
 	@echo "\n~~~ $(BOLD)$(CYAN)Creating the ECR repo$(NORMAL) ~~~"
